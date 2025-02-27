@@ -1,5 +1,4 @@
-import win32com.client
+def example(x, y=5):
+    print(x, y)
 
-explore = win32com.clinetdispatch("InternetExplorer.Application")
-explore.Visible + True
-
+example(x=10)
