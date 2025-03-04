@@ -1,4 +1,5 @@
-def example(x, y=5):
-    print(x, y)
+name = "*"
+print(f"{name:>10}")
+print(f"{name:>5}")
+print(f"{name:>3}")
 
-example(x=10)
