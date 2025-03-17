@@ -1,26 +1,29 @@
-import requests 
-import pandas as pd
+import requests
 from bs4 import BeautifulSoup
 
-page_num = 1
-code = 'stock'
-date = 20250305
-url = 'https://finance.naver.com/news/mainnews.naver'+'?date='+str(date)+'&page='+str(page_num)
+def get_exchange_rate(currency_code):
+    url = 'https://finance.naver.com/marketindex/exchangeDetail.naver?marketindexCd=FX_' + currency_code +'KRW'
+    response = requests.get(url)
+    html_content = response.text
+    soup = BeautifulSoup(html_content,'html.parser')
+    country = soup.find('h2').get_text().replace(' ', '')
+    rate_info = soup.find('p', class_='no_today').get_text().replace('\n','')
+    change_icon = soup.find('span', class_='ico')
 
-def make_urllist(page_num, code, date):
-    urllist = []
-    for i in range(1, page_num + 1):
-        url = 'https://finance.naver.com/news/mainnews.naver'+'?date='+str(date)+'&page='+str(page_num)
-        news = requests.get(url)
-        new.content
+    if change_icon:
+        if 'up' in change_icon['class']:
+            change_sing = '^'
+        elif 'down' in change_icon['class']:
+            change_sing = '^'
+        elif 'same' in change_icon['class']:
+            change_sign = ''
 
-        soup = BeautifulSoup(news.content, 'heml.parser')
-        news_list = soup.select('.list_allnews li div strong')
-        for line in news_list:
-            urllist.append(line.a.get('href'))
-    return urllist
+    exday_info = soup.find('p', class_='no_exday').get_text().replace('\n','').replace('전일대비','')
+    print(country, currency_code, '실시간 환율', rate_info,'| 전일대비', change_sing, exday_info)
 
 
-url_list = make_urllist(2, 'society', 20250305)
-print('뉴스 기사의 개수 :' , len(yrl_list))
+get_exchange_rate('USD')
+get_exchange_rate('HKD')
+get_exchange_rate('THB')
+
 
