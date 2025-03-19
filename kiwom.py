@@ -1,21 +1,16 @@
 import sys
+from PyQt5.QAxContainer import *
 from PyQt5.QtWidgets import *
-
-class MyWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        btn = QPushButton('Button', self)
-        btn.move(50, 10)
-        btn.clicked.connect(self.btn_clicked)
-
-    def btn_clicked(self):
-        print('button clicked')
-
-
+import pythoncom
 
 app = QApplication(sys.argv)
-win = MyWindow()
-win.show()
-app.exec_()
+ocx = QAxWidget("KHOPENAPI.KHOpenAPICtrl.1")
+
+ocx.dynamicCall('CommConnect()')
+while True:
+    pythoncom.PumpWaitingMessages()
+
+
+
+
 
