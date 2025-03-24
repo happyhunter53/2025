@@ -1,7 +1,4 @@
-import sys
-from PyQt5.QAxContainer import *
-from PyQt5.QtWidgets import *
-import pythoncom
+# kiwoom.py
 
 class Kiwoom:
     def __init__ (self):
@@ -17,12 +14,3 @@ class Kiwoom:
     def OnEventConnect(self, code):
         self.login = True
         print('login is done', code)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-
-    kiwoom = Kiwoom()
-    kiwoom.CommConnect()
-
-
-
