@@ -1,5 +1,8 @@
 # kiwoom.py
 
+from PyQt5.QAxContainer import *
+import pythoncom
+
 class Kiwoom:
     def __init__ (self):
         self.ocx = QAxWidget('KHOPENAPI.KHOpenAPICtrl.1')
@@ -14,3 +17,10 @@ class Kiwoom:
     def OnEventConnect(self, code):
         self.login = True
         print('login is done', code)
+
+    def GetCodeListByMarket(self, market):
+        ret = self.ocx.dynamicCall('GetCodeListByMarket(QString)', market)
+        
+        codes_list = ret.split(';')
+        codes = codes_list[ :-1]
+        return codes
